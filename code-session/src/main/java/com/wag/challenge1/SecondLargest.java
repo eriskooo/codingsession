@@ -14,7 +14,22 @@ public class SecondLargest {
      * </ul>
      */
     public static int findSecondLargest(List<Integer> integers) {
-        //TODO Your implementation
-        return 0;
+        if (integers == null || integers.size() < 2) {
+            throw new IllegalArgumentException("zly vstup");
+        }
+        Integer m1 = null;
+        Integer m2 = null;
+
+        for (Integer i : integers) {
+            if (m1 == null || i > m1) {
+                m2 = m1;
+                m1 = i;
+            } else if (m2 == null || m1 > i  && i > m2) {
+                m2 = i;
+            }
+
+            System.out.println("m1 = " + m1 + " m2 = "+m2);
+        }
+        return m2;
     }
 }
