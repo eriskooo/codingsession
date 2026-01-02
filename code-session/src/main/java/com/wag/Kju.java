@@ -17,10 +17,8 @@ public class Kju {
                     System.out.print(">");
                     String s = scanner.nextLine();
                     kju.offer(s);
-                    try {
-                        Thread.sleep(10);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
+                    if ("exit".equalsIgnoreCase(s)) {
+                        break;
                     }
                 }
             }
@@ -34,9 +32,9 @@ public class Kju {
                 try {
                     while (true) {
                         String taken = kju.take();
-                        System.out.println("::: " + taken);
+                        System.out.println(taken);
                         if ("exit".equalsIgnoreCase(taken)) {
-                            throw new InterruptedException();
+                            break;
                         }
                     }
                 } catch (InterruptedException e) {
