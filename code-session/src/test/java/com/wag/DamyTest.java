@@ -24,8 +24,8 @@ class DamyTest {
         assertTrue(Damy.vertical.test(pole, 0,0));
 
         // empty
-        assertFalse(Damy.horizontal.test(pole, 0,3));
-        assertFalse(Damy.vertical.test(pole, 1,0));
+        assertFalse(Damy.horizontal.test(pole, 3,3));
+        assertFalse(Damy.vertical.test(pole, 6,5));
 
     }
 

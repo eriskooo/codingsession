@@ -42,24 +42,25 @@ public class Damy {
 
 
     static TriPredicate<int[][], Integer, Integer> horizontal = (board, row, col) -> {
+        int[] rowBoard = board[row];
         for (int r = 0; r < board.length; r++) {
-            if (r == row) continue;
-            if (board[r][col] != 0) return true; // found
+            if (rowBoard[r] != 0) {
+                return true; // found
+            }
         }
         return false;
     };
 
     static TriPredicate<int[][], Integer, Integer> vertical = (board, row, col) -> {
         for (int c = 0; c < board.length; c++) {
-            if (c == col) continue;
-            if (board[row][c] != 0) return true; // found
+            int[] rowBoard = board[c];
+            if (rowBoard[col] != 0) return true; // found
         }
         return false;
     };
 
     static TriPredicate<int[][], Integer, Integer> diagonal = (board, row, col) -> {
-        // todo:
-        for (int c = 0; c < row; c++) {
+        for (int i = row - 1; i != 0; i--) {
 
         }
         return false;
