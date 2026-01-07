@@ -19,9 +19,17 @@ public class Damy {
     };
 
     public static void main(String[] args) {
+        int counter = 0;
+        for (int i = 0; i < pole.length; i++) {
+            for (int j = 0; j < pole[i].length; j++) {
+                boolean found = horizontal.test(pole, i, j) || vertical.test(pole, i, j) || diagonal.test(pole, i, j);
+                if (!found) {
+                    pole[i][j] = ++counter;
+                    break;
+                }
+            }
+        }
         kresli(pole);
-//        boolean b = horizontal.test(pole, i, j) && vertical.test(pole, i, j) && diagonal.test(pole, i, j);
-
     }
 
     static TriPredicate<int[][], Integer, Integer> horizontal = (board, row, col) -> {
@@ -81,7 +89,7 @@ public class Damy {
     static void kresli(int[][] pole) {
         for (int i = 0; i < pole.length; i++) {
             for (int j = 0; j < pole.length; j++) {
-                System.out.print(pole[i][j]);
+                System.out.print(pole[i][j] +"\t");
             }
             System.out.println();
         }
