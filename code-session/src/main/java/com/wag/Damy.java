@@ -20,27 +20,44 @@ public class Damy {
 
     static int[] colForRow = {-1, -1, -1, -1, -1, -1, -1, -1};
 
+    static int solutions = 0; // sem budeme počítať počet riešení
+
     public static void main(String[] args) {
-        int row=0;
-        while (row >= 0 && row < 8) {
-            int nextCol =  hladajRexo(row, colForRow);
+        int row = 0;
+
+        while (row >= 0) {
+
+            // 1) Ak máme umiestnené dámy vo všetkých 8 riadkoch, našli sme riešenie
+            if (row == 8) {
+                solutions++;
+
+                // voliteľne: vypíš aktuálne riešenie
+                printBoard(colForRow);
+                System.out.println("Riešenie č. " + solutions);
+                System.out.println();
+
+                // backtracking: vrátime sa na posledný riadok a hľadáme ďalší stĺpec
+                row--;
+                continue;
+            }
+
+            // 2) Pokúsime sa nájsť ďalší bezpečný stĺpec v danom riadku
+            int nextCol = hladajRexo(row, colForRow);
+
             if (nextCol != -1) {
                 // našli sme bezpečný stĺpec – umiestnime dámu
                 colForRow[row] = nextCol;
-                // ideme do ďalšieho riadku
+                // posunieme sa do ďalšieho riadku
                 row++;
             } else {
-                // v tomto riadku už niet kam dať dámu – musíme sa vrátiť o riadok späť
-                colForRow[row] = -1; // tento riadok je aktuálne bez dámy
-                row--;               // backtracking
+                // v tomto riadku už niet žiadneho bezpečného stĺpca – resetneme ho
+                colForRow[row] = -1;
+                // a vrátime sa o riadok späť
+                row--;
             }
         }
-        if (row == 8) {
-            // máme riešenie – vypíšeme šachovnicu
-            printBoard(colForRow);
-        } else {
-            System.out.println("Žiadne riešenie sa nenašlo.");
-        }
+
+        System.out.println("Celkový počet riešení: " + solutions);
     }
 
     private static int hladajRexo(int row, int[] colForRow) {
