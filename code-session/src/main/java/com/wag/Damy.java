@@ -8,11 +8,11 @@ public class Damy {
     }
 
     static int[][] pole = {
-            {0, 0, 1, 0, 0, 0, 0, 0},
-            {1, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 1, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0}
@@ -20,26 +20,9 @@ public class Damy {
 
     public static void main(String[] args) {
         kresli(pole);
-        boolean ok = validuj(pole);
-        System.out.println(ok);
-    }
+//        boolean b = horizontal.test(pole, i, j) && vertical.test(pole, i, j) && diagonal.test(pole, i, j);
 
-    private static boolean validuj(int[][] pole) {
-        for (int i = 0; i < pole.length; i++) {
-            for (int j = 0; j < pole.length; j++) {
-                if (pole[i][j] != 0) {
-                    System.out.println("pozeram riadok =" + i + ", stlpec=" + j);
-                    boolean b = horizontal.test(pole, i, j) && vertical.test(pole, i, j);
-                    if (b == false) {
-                        System.out.println("fail at i=" + i + ", j=" + j);
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
     }
-
 
     static TriPredicate<int[][], Integer, Integer> horizontal = (board, row, col) -> {
         int[] rowBoard = board[row];
@@ -95,7 +78,7 @@ public class Damy {
         return false;
     };
 
-    private static void kresli(int[][] pole) {
+    static void kresli(int[][] pole) {
         for (int i = 0; i < pole.length; i++) {
             for (int j = 0; j < pole.length; j++) {
                 System.out.print(pole[i][j]);
