@@ -60,9 +60,38 @@ public class Damy {
     };
 
     static TriPredicate<int[][], Integer, Integer> diagonal = (board, row, col) -> {
-        for (int i = row - 1; i != 0; i--) {
-
+        int leftUp = col;
+        for (int i = row - 1; i >= 0; i--) {
+            int[] rowBoard = board[i];
+            if (--leftUp >= 0) {
+                if (rowBoard[leftUp] != 0) return true;
+            }
         }
+
+        int rightUp = col;
+        for (int i = row - 1; i >= 0; i--) {
+            int[] rowBoard = board[i];
+            if (++rightUp <= rowBoard.length - 1) {
+                if (rowBoard[rightUp] != 0) return true;
+            }
+        }
+
+        int leftDown = col;
+        for (int i = row + 1; i < board.length; i++) {
+            int[] rowBoard = board[i];
+            if (--leftDown >= 0) {
+                if (rowBoard[leftDown] != 0) return true;
+            }
+        }
+
+        int rightDown = col;
+        for (int i = row + 1; i < board.length; i++) {
+            int[] rowBoard = board[i];
+            if (++rightDown <= rowBoard.length - 1) {
+                if (rowBoard[rightDown] != 0) return true;
+            }
+        }
+
         return false;
     };
 
