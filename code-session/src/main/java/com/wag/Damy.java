@@ -128,38 +128,16 @@ public class Damy {
     };
 
     static TriPredicate<int[][], Integer, Integer> diagonal = (board, row, col) -> {
-        int leftUp = col;
-        for (int i = row - 1; i >= 0; i--) {
-            int[] rowBoard = board[i];
-            if (--leftUp >= 0) {
-                if (rowBoard[leftUp] != 0) return true;
+        for (int r = 0; r < board.length; r++) {
+            int[] rowBoard = board[r];
+            for (int c = 0; c < rowBoard.length; c++) {
+                if (r == row && c == col) continue;      // aby si nepočítal sám seba
+                if (rowBoard[c] != 0 &&
+                        Math.abs(row - r) == Math.abs(col - c)) {
+                    return true; // konflikt na diagonále
+                }
             }
         }
-
-        int rightUp = col;
-        for (int i = row - 1; i >= 0; i--) {
-            int[] rowBoard = board[i];
-            if (++rightUp <= rowBoard.length - 1) {
-                if (rowBoard[rightUp] != 0) return true;
-            }
-        }
-
-        int leftDown = col;
-        for (int i = row + 1; i < board.length; i++) {
-            int[] rowBoard = board[i];
-            if (--leftDown >= 0) {
-                if (rowBoard[leftDown] != 0) return true;
-            }
-        }
-
-        int rightDown = col;
-        for (int i = row + 1; i < board.length; i++) {
-            int[] rowBoard = board[i];
-            if (++rightDown <= rowBoard.length - 1) {
-                if (rowBoard[rightDown] != 0) return true;
-            }
-        }
-
         return false;
     };
 
