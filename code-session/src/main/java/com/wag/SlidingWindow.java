@@ -23,22 +23,25 @@ public class SlidingWindow {
         System.out.println("a = " + Arrays.toString(a));
         System.out.println("w = " + w);
 
-        int max = Integer.MIN_VALUE;
-        for (int i = 0; i <= a.length - w; i++) {
-            int temp = 0;
+        int sum = 0;
+        for (int i = 0; i < w; i++) {
+            sum += a[i];
+        }
 
-            // spocitame vsetko pre okno
-            for (int j = 0; j < w; j++) {
-                temp = temp + a[i + j];
-            }
+        System.out.println("initial : " + sum);
 
-            if (temp > max) {
-                max = temp;
+        int best = sum;
+        for (int i = w; i < a.length; i++) {
+            int left = a[i - w];
+            int right = a[i];
+            sum = sum - left + right;
+            if (sum > best) {
+                best = sum;
             }
         }
 
-        System.out.println("max = " + max);
-        return max;
+        System.out.println("best = " + best);
+        return best;
     }
 
 }
