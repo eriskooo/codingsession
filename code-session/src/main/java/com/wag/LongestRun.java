@@ -1,55 +1,49 @@
 package com.wag;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class LongestRun {
     public static Result longestRun(String s) {
-        System.out.println(s);
+        if (s == null || s.isEmpty()) {
+            throw new IllegalArgumentException("Input string must not be null/empty.");
+        }
 
-        if (s == null || s.isEmpty()) throw new IllegalArgumentException();
+        // current run
+        char currCh = s.charAt(0);
+        int currStart = 0;
+        int currLen = 1;
 
-        Map<Character, Result> lenght = new HashMap<>();
-        Character latestChar = null;
-        int startIndex = 0;
-        for (int i = 0; i < s.length(); i++) {
+        // best run so far
+        char bestCh = currCh;
+        int bestStart = 0;
+        int bestLen = 1;
+
+        for (int i = 1; i < s.length(); i++) {
             char ch = s.charAt(i);
-            if (latestChar == null) {
-                startIndex = i;
-                latestChar = ch;
-                Result r = new Result(ch, 1, startIndex);
-                lenght.put(ch, r);
+
+            if (ch == currCh) {
+                currLen++;
             } else {
-                if (ch == latestChar) {
-                    if (lenght.containsKey(ch)) {
-                        Result r = lenght.get(ch);
-                        int i1 = r.length + 1;
-                        int i2 = r.startIndex;
-                        lenght.put(ch, new Result(ch, i1, i2));
-                    } else {
-                        Result r = new Result(ch, 1, startIndex);
-                        lenght.put(ch, r);
-                    }
-                } else {
-                    startIndex = i;
-                    latestChar = ch;
-                    lenght.put(ch, new Result(ch, 1, startIndex));
+                // close current run and compare to best
+                if (currLen > bestLen || (currLen == bestLen && currStart < bestStart)) {
+                    bestCh = currCh;
+                    bestLen = currLen;
+                    bestStart = currStart;
                 }
+
+                // start new run
+                currCh = ch;
+                currStart = i;
+                currLen = 1;
             }
         }
 
-        // najdi najvacsi
-        int maxValue = 0;
-        Character maxChar = null;
-        for (Character ch : lenght.keySet()) {
-            if (maxValue < lenght.get(ch).length) {
-                maxValue = lenght.get(ch).length;
-                maxChar = ch;
-            }
+        // final run (string may end while still in a run)
+        if (currLen > bestLen || (currLen == bestLen && currStart < bestStart)) {
+            bestCh = currCh;
+            bestLen = currLen;
+            bestStart = currStart;
         }
 
-
-        return lenght.get(maxChar);
+        return new Result(bestCh, bestLen, bestStart);
     }
 
     public record Result(char ch, int length, int startIndex) {
