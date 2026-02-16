@@ -20,12 +20,44 @@ public class MergeIntervals {
      * @return
      */
     public static List<int[]> mergeIntervals(List<int[]> intervals) {
-        if (intervals == null || intervals.size() == 0) {
-            return new ArrayList<>();
+        if (intervals == null || intervals.size() < 2) {
+            throw new IllegalArgumentException();
         }
 
+        // sort
+        List<int[]> sorted = intervals.stream()
+                .peek(m -> {
+                    if (m.length != 2) {
+                        throw new IllegalArgumentException();
+                    }
+                })
+                .sorted((a, b) -> a[0] - b[0])
+                .toList();
+        print("sorted", sorted);
 
-        return null;
+        List<int[]> out = new ArrayList<>();
+        int[] curr = sorted.get(0);
+
+        for (int i = 1; i < sorted.size(); i++) {
+            int[] next = sorted.get(i);
+            if (curr[1] >= next[0]) {
+                curr[1] = Math.max(curr[1], next[1]);
+            } else {
+                out.add(curr);
+                curr = next;
+            }
+        }
+
+        out.add(curr);
+
+        return out;
+    }
+
+    private static void print(String message, List<int[]> intervals) {
+        System.out.println("*** " + message + " ***");
+        for (int[] interval : intervals) {
+            System.out.println(interval[0] + " " + interval[1]);
+        }
     }
 
 
