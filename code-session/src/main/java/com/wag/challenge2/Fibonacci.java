@@ -16,10 +16,33 @@ public class Fibonacci {
      *
      * Change it so all unit tests are passed.
      */
+//    public static long fibonacci(long n) {
+//        if (n <= 1) {
+//            return n;
+//        }
+//        return fibonacci(n - 1) + fibonacci(n - 2);
+//    }
+
     public static long fibonacci(long n) {
-        if (n <= 1) {
-            return n;
+        if (n < 0) {
+            throw new IllegalArgumentException();
         }
-        return fibonacci(n - 1) + fibonacci(n - 2);
+        if (n == 0) {
+            return 0;
+        }
+        if (n == 1) {
+            return 1;
+        }
+
+        long first = 0;
+        long sec = 1;
+
+        for (int i = 2; i < n; i++) {
+            long t = first + sec;
+            first = sec;
+            sec = t;
+        }
+
+        return first + sec;
     }
 }
